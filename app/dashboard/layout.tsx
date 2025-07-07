@@ -3,7 +3,9 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth"; 
 import { redirect } from "next/navigation";
-import Sidebar from "@/components/dashboard/Sidebar"; // sidebar for dashboard layout
+import Sidebar from "@/components/dashboard/Sidebar";
+
+
 
 export default async function DashboardLayout({
   children,
@@ -18,7 +20,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar /> {/* show left sidebar */}
+      <Sidebar/>
       <main className="flex-1 p-6">{children}</main> {/* main page content */}
     </div>
   );
