@@ -11,16 +11,21 @@ if (!process.env.MONGODB_URI) {
 let client
 let clientPromise
 
+declare global {
+  // eslint-disable-next-line no-var
+  var _mongoClientPromise: Promise<MongoClient> | undefined;
+}
+
 if (process.env.NODE_ENV === "development") {
   // In development mode, use a global variable 
   if (!global._mongoClientPromise) {
-    client = new MongoClient(uri)
+    client = new MongoClient(uri as string)
     global._mongoClientPromise = client.connect()
   }
   clientPromise = global._mongoClientPromise
 } else {
   // In production mode
-  client = new MongoClient(uri)
+  client = new MongoClient(uri as string)
   clientPromise = client.connect()
 }
 
