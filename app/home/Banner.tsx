@@ -7,10 +7,10 @@ export default function Banner() {
     <section className="flex flex-col md:flex-row items-center justify-between gap-6 p-6 bg-gray-100 rounded-2xl shadow-md">
       {/* left side content */}
       <div className="flex-1 space-y-4">
-        <h1 className="text-2xl md:text-3xl lg:text-6xl font-semibold text-gray-800">
+        <h1 className="text-2xl md:text-3xl lg:text-6xl font-extrabold text-gray-800">
           A Journey of Growth: Empowering Yourself & Your Child
         </h1>
-        <p className="text-gray-600">
+        <p className="text-gray-600 text-lg">
           Join us in unlocking tools, support, and strategies to help both you and your child thrive.
           A path to mindful parenting starts here.
         </p>
