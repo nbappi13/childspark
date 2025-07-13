@@ -7,7 +7,7 @@ export default function AboutPreview() {
     <div className="max-w-7xl mx-auto px-4 py-16">
       {/* main heading with decorative elements */}
       <div className="relative text-center mb-16">
-        <h1 className="text-4xl md:text-3xl font-bold text-gray-800 relative z-10 inline-block">
+        <h1 className="text-2xl md:text-2xl font-normal text-gray-800 relative z-10 inline-block">
           <span className="relative">
             ABOUT US
             <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"></span>

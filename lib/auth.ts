@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
-    // Fetched user role from MongoDB and added to JWT token
+    // fetched user role from MongoDB and added to JWT token
     async jwt({ token }) {
       try {
         const client = await clientPromise;
@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
 
-    // Add role from JWT token to session object
+    // add role from JWT token to session object
     async session({ session, token }) {
       if (session.user) {
         session.user.role = (token.role as string) || "user";

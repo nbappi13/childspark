@@ -1,33 +1,35 @@
 // lib/mongodb.ts
 
-import { MongoClient } from "mongodb"
+import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI
+const uri = process.env.MONGODB_URI;
 
-if (!process.env.MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable inside .env.local")
+if (!uri) {
+  throw new Error("Please define the MONGODB_URI environment variable inside .env.local");
 }
 
-let client
-let clientPromise
+let client: MongoClient;
+let clientPromise: Promise<MongoClient>;
 
 declare global {
-  // eslint-disable-next-line no-var
+  /* eslint-disable no-var */
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
+
 if (process.env.NODE_ENV === "development") {
-  // In development mode, use a global variable 
   if (!global._mongoClientPromise) {
-    client = new MongoClient(uri as string)
-    global._mongoClientPromise = client.connect()
+    client = new MongoClient(uri);
+    global._mongoClientPromise = client.connect();
   }
-  clientPromise = global._mongoClientPromise
+  clientPromise = global._mongoClientPromise;
 } else {
-  // In production mode
-  client = new MongoClient(uri as string)
-  clientPromise = client.connect()
+  client = new MongoClient(uri);
+  clientPromise = client.connect();
 }
 
-// Export a module-scoped MongoClient promise.
-export default clientPromise
+
+export type { MongoClient };
+
+// export with correct type
+export default clientPromise;
