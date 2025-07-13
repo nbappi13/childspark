@@ -2,13 +2,15 @@
 
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import Providers from "./providers"; 
+import Providers from "./providers";
+import { Toaster } from "sonner"; 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <Providers> {/* wrap only inside client provider */}
+        <Toaster richColors position="top-center" /> 
+        <Providers>
           <Navbar />
           {children}
         </Providers>
