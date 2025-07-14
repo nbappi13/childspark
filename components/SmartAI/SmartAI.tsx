@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import faqData from "@/data/faqData";
 import SmartAIButton from "./SmartAIButton";
+import stringSimilarity from "string-similarity";
 
 export default function SmartAI() {
   const [sampleShown, setSampleShown] = useState(true);
@@ -61,6 +62,7 @@ export default function SmartAI() {
   const getBotResponse = (userInput: string) => {
     const normalized = userInput.trim().toLowerCase();
 
+    // first: try to match keywords
     for (const faq of faqData) {
       const question = faq.question.toLowerCase();
       const questionKeywords = question.split(/[\s,?.!]+/);
@@ -75,6 +77,18 @@ export default function SmartAI() {
       }
     }
 
+    // fallback: fuzzy match
+    const questions = faqData.map((faq) => faq.question.toLowerCase());
+    const { bestMatch } = stringSimilarity.findBestMatch(normalized, questions);
+
+    if (bestMatch.rating > 0.4) {
+      const bestFaq = faqData.find(
+        (faq) => faq.question.toLowerCase() === bestMatch.target
+      );
+      return bestFaq?.answer || "🤔 I'm not sure how to help with that.";
+    }
+
+    // nothing matched
     return "😅 Sorry! I’m here to help with SmartParentsHC only. Try asking about courses, payment, or certificates!";
   };
 
