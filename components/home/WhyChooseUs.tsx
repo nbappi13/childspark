@@ -1,3 +1,5 @@
+//components/home/WhyChooseUs.tsx
+
 import { CheckCircle, Users, Lightbulb, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 

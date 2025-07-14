@@ -1,6 +1,7 @@
 import AboutPreview from '@/components/home/AboutPreview';
 import Banner from './home/Banner';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
+import HomeCoursesSection from '@/components/home/HomeCoursesSection';
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
       <Banner />
       <AboutPreview></AboutPreview>
       <WhyChooseUs></WhyChooseUs>
+      <HomeCoursesSection></HomeCoursesSection>
     </main>
   );
 }
