@@ -1,6 +1,6 @@
 // data/faqData.ts
 
-export const faqData = [
+const faqData = [
   // General SmartParentsHC Questions
   {
     question: "How do I enroll in a course?",
@@ -20,6 +20,10 @@ export const faqData = [
   },
   {
     question: "How can I pay?",
+    answer: "You can pay using Visa, MasterCard, or any Stripe-supported method. It’s fast, safe, and secure!"
+  },
+  {
+    question: "Tell me about payment?",
     answer: "You can pay using Visa, MasterCard, or any Stripe-supported method. It’s fast, safe, and secure!"
   },
   {
@@ -73,3 +77,5 @@ export const faqData = [
     answer: "It’s $34. This course helps your child explore careers based on their passions — from STEM to arts — with your support as a guide. 🎯"
   }
 ];
+
+export default faqData;
