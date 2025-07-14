@@ -36,6 +36,12 @@ export default function Navbar() {
           >
             ABOUT US
           </Link>
+          <Link
+            href="/contact"
+            className="text-sm text-gray-700 hover:text-blue-600 transition font-medium"
+          >
+            Contact
+          </Link>
         </div>
 
         {/* right: dashboard icon & auth buttons */}
