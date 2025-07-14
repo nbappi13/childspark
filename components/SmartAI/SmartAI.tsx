@@ -47,21 +47,32 @@ export default function SmartAI() {
   };
 
   const getBotResponse = (userInput: string) => {
-    const lowerInput = userInput.toLowerCase();
+    const normalized = userInput.trim().toLowerCase();
 
-    // match to known questions in faqData
-    const match = faqData.find(
-      (faq) => lowerInput.includes(faq.question.toLowerCase().slice(0, 8)) // simple match
-    );
+    // Try to find the best matching FAQ
+    for (const faq of faqData) {
+      const question = faq.question.toLowerCase();
 
-    if (match) return match.answer;
+      // simple smart match: checking if any keyword from question exists in input
+      const questionKeywords = question.split(/[\s,?.!]+/);
+      const inputKeywords = normalized.split(/[\s,?.!]+/);
 
+      const matchFound = questionKeywords.some((qWord) =>
+        inputKeywords.includes(qWord)
+      );
+
+      if (matchFound) {
+        return faq.answer;
+      }
+    }
+
+    // fallback if nothing matched
     return "😅 Sorry! I’m here to help with SmartParentsHC only. Try asking about courses, payment, or certificates!";
   };
 
   return (
     <div>
-      {/* floating Chat Bubble */}
+      {/* floating Chat bubble */}
       <SmartAIButton
         onClick={() => {
           if (open) {
