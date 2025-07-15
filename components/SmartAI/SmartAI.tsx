@@ -4,10 +4,13 @@ import React, { useState, useEffect, useRef } from "react";
 import faqData from "@/data/faqData";
 import SmartAIButton from "./SmartAIButton";
 import stringSimilarity from "string-similarity";
+import { useSmartAIStore } from "@/store/useSmartAIStore";  // import Zustand store
 
 export default function SmartAI() {
+  // used global Zustand state for open instead of local useState
+  const { isOpen, toggle, close } = useSmartAIStore();
+
   const [sampleShown, setSampleShown] = useState(true);
-  const [open, setOpen] = useState(false);
   const [userClosed, setUserClosed] = useState(false);
   const [botTyping, setBotTyping] = useState(false);
   const [input, setInput] = useState("");
@@ -20,17 +23,17 @@ export default function SmartAI() {
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
-  // auto-popup on scroll
+  // auto-popup on scroll (only if user hasn't manually closed)
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 500 && !open && !userClosed) {
-        setOpen(true);
+      if (window.scrollY > 500 && !isOpen && !userClosed) {
+        toggle();  // open using Zustand toggle
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [open, userClosed]);
+  }, [isOpen, userClosed, toggle]);
 
   // auto-scroll to latest message
   useEffect(() => {
@@ -62,7 +65,6 @@ export default function SmartAI() {
   const getBotResponse = (userInput: string) => {
     const normalized = userInput.trim().toLowerCase();
 
-    // first: try to match keywords
     for (const faq of faqData) {
       const question = faq.question.toLowerCase();
       const questionKeywords = question.split(/[\s,?.!]+/);
@@ -77,7 +79,6 @@ export default function SmartAI() {
       }
     }
 
-    // fallback: fuzzy match
     const questions = faqData.map((faq) => faq.question.toLowerCase());
     const { bestMatch } = stringSimilarity.findBestMatch(normalized, questions);
 
@@ -88,7 +89,6 @@ export default function SmartAI() {
       return bestFaq?.answer || "🤔 I'm not sure how to help with that.";
     }
 
-    // nothing matched
     return "😅 Sorry! I’m here to help with SmartParentsHC only. Try asking about courses, payment, or certificates!";
   };
 
@@ -97,16 +97,16 @@ export default function SmartAI() {
       {/* floating button */}
       <SmartAIButton
         onClick={() => {
-          if (open) setUserClosed(true);
-          setOpen(!open);
+          if (isOpen) setUserClosed(true);
+          toggle();
         }}
-        isOpen={open}
+        isOpen={isOpen}
       />
 
       {/* chat window */}
       <div
         className={`fixed bottom-20 right-6 w-80 max-w-[90vw] bg-white shadow-lg border rounded-lg z-50 flex flex-col overflow-hidden transition-all duration-300 ${
-          open
+          isOpen
             ? "opacity-100 scale-100"
             : "opacity-0 scale-90 pointer-events-none"
         }`}
@@ -116,7 +116,7 @@ export default function SmartAI() {
           <span>SmartAI Assistant</span>
           <button
             onClick={() => {
-              setOpen(false);
+              close();  // close globally
               setUserClosed(true);
             }}
             className="text-white hover:text-gray-200 text-lg"

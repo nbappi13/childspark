@@ -9,71 +9,145 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/Tooltip";
-import { LayoutDashboard } from "lucide-react"; // lucide dashboard icon
+import { LayoutDashboard, Bot, Menu, X } from "lucide-react";
+import { useState } from "react";
+import { useSmartAIStore } from "@/store/useSmartAIStore";
 
 export default function Navbar() {
   const { data: session } = useSession();
+  const { toggle } = useSmartAIStore();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <TooltipProvider>
-      <nav className="flex items-center justify-between px-6 py-4 shadow-sm border-b bg-white">
-        {/* left: logo */}
-        <Link href="/" className="text-xl font-bold text-primary">
-          ChildSpark
-        </Link>
+      <nav className="bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-4">
+            {/* left: logo + site name */}
+            <Link href="/" className="flex items-center gap-2 text-xl font-bold">
+              <span className="text-3xl">👨‍👩‍👧</span>
+              <span>SmartParentsHC</span>
+            </Link>
 
-        {/* center: navigation links */}
-        <div className="flex-1 flex justify-center gap-8">
-          <Link
-            href="/courses"
-            className="text-sm font-medium hover:text-primary transition"
-          >
-            COURSES
-          </Link>
-          <Link
-            href="/about"
-            className="text-sm font-medium hover:text-primary transition"
-          >
-            ABOUT US
-          </Link>
-          <Link
-            href="/contact"
-            className="text-sm text-gray-700 hover:text-blue-600 transition font-medium"
-          >
-            Contact
-          </Link>
-        </div>
+            {/* right section */}
+            <div className="flex items-center gap-4">
+              {/* desktop nav links */}
+              <div className="hidden md:flex gap-6 text-sm font-medium">
+                <Link href="/courses" className="hover:text-yellow-300 transition">
+                  COURSES
+                </Link>
+                <Link href="/about" className="hover:text-yellow-300 transition">
+                  ABOUT US
+                </Link>
+                <Link href="/contact" className="hover:text-yellow-300 transition">
+                  CONTACT
+                </Link>
+              </div>
 
-        {/* right: dashboard icon & auth buttons */}
-        <div className="flex items-center gap-6">
-          {/* dashboard icon with tooltip */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Link href="/dashboard" className="hover:opacity-80">
-                <LayoutDashboard size={36} className="text-blue-600" />{" "}
-                {/* large dashboard icon */}
+              {/* dashboard icon */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link href="/dashboard" className="hover:opacity-80">
+                    <LayoutDashboard size={26} />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>Dashboard</p>
+                </TooltipContent>
+              </Tooltip>
+
+              {/* SmartAI icon */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button onClick={toggle}>
+                    <Bot size={24} className="hover:text-yellow-300 transition" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>SmartAI</p>
+                </TooltipContent>
+              </Tooltip>
+
+              {/* desktop-only auth button */}
+              <div className="hidden md:block">
+                {session ? (
+                  <Button
+                    variant="outline"
+                    className="text-white border-white hover:bg-white hover:text-blue-600"
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                  >
+                    Logout
+                  </Button>
+                ) : (
+                  <Button
+                    className="bg-yellow-400 hover:bg-yellow-500 text-black"
+                    onClick={() => signIn("google", { callbackUrl: "/" })}
+                  >
+                    Login with Google
+                  </Button>
+                )}
+              </div>
+
+              {/* hamburger for mobile */}
+              <button
+                className="md:hidden"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle Menu"
+              >
+                {menuOpen ? <X size={26} /> : <Menu size={26} />}
+              </button>
+            </div>
+          </div>
+
+          {/* mobile menu */}
+          {menuOpen && (
+            <div className="md:hidden bg-blue-500 px-4 pb-4 flex flex-col gap-3 text-sm font-medium text-white transition-all">
+              <Link
+                href="/courses"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-yellow-300"
+              >
+                COURSES
               </Link>
-            </TooltipTrigger>
-            <TooltipContent side="bottom">
-              <p>Dashboard</p>
-            </TooltipContent>
-          </Tooltip>
+              <Link
+                href="/about"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-yellow-300"
+              >
+                ABOUT US
+              </Link>
+              <Link
+                href="/contact"
+                onClick={() => setMenuOpen(false)}
+                className="hover:text-yellow-300"
+              >
+                CONTACT
+              </Link>
 
-          {/* auth button */}
-          {session ? (
-            <Button
-              variant="outline"
-              onClick={() => signOut({ callbackUrl: "/" })}
-            >
-              Logout
-            </Button>
-          ) : (
-            <Button
-              className="bg-red-500 hover:bg-red-600 text-white"
-              onClick={() => signIn("google", { callbackUrl: "/" })}
-            >
-              Login with Google
-            </Button>
+              {/* mobile-only auth button */}
+              {session ? (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    signOut({ callbackUrl: "/" });
+                  }}
+                  className="text-orange-400 border-white hover:bg-white hover:text-blue-600 mt-2"
+                >
+                  Logout
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    setMenuOpen(false);
+                    signIn("google", { callbackUrl: "/" });
+                  }}
+                  className="bg-yellow-400 hover:bg-yellow-500 text-black mt-2"
+                >
+                  Login with Google
+                </Button>
+              )}
+            </div>
           )}
         </div>
       </nav>
