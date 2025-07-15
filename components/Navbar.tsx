@@ -29,21 +29,21 @@ export default function Navbar() {
               <span>SmartParentsHC</span>
             </Link>
 
+            {/*  middle: desktop nav links */}
+            <div className="hidden md:flex gap-6 text-sm font-medium">
+              <Link href="/courses" className="hover:text-yellow-300 transition">
+                COURSES
+              </Link>
+              <Link href="/about" className="hover:text-yellow-300 transition">
+                ABOUT US
+              </Link>
+              <Link href="/contact" className="hover:text-yellow-300 transition">
+                CONTACT
+              </Link>
+            </div>
+
             {/* right section */}
             <div className="flex items-center gap-4">
-              {/* desktop nav links */}
-              <div className="hidden md:flex gap-6 text-sm font-medium">
-                <Link href="/courses" className="hover:text-yellow-300 transition">
-                  COURSES
-                </Link>
-                <Link href="/about" className="hover:text-yellow-300 transition">
-                  ABOUT US
-                </Link>
-                <Link href="/contact" className="hover:text-yellow-300 transition">
-                  CONTACT
-                </Link>
-              </div>
-
               {/* dashboard icon */}
               <Tooltip>
                 <TooltipTrigger asChild>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FaFacebookF, FaXTwitter, FaLinkedinIn } from "react-icons/fa6";
-import { FaGraduationCap } from "react-icons/fa6"; 
+ 
 
 export default function Footer() {
   return (
@@ -10,12 +10,13 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-700">
         {/* Left: logo and site name */}
         <div className="flex items-center gap-2 mb-4 sm:mb-0">
-          <FaGraduationCap className="text-xl text-indigo-600" />
+          <span className="text-3xl">👨‍👩‍👧</span>
           <span className="font-bold text-xl text-indigo-700">SmartParentsHC</span>
         </div>
 
         {/* Middle: Links */}
         <div className="space-x-6 mb-4 sm:mb-0">
+          <Link href="/" className="hover:underline text-slate-900 text-base">Home</Link>
           <Link href="/about" className="hover:underline text-slate-900 text-base">About Us</Link>
           <Link href="/contact" className="hover:underline text-slate-900 text-base">Contact</Link>
         </div>
@@ -53,7 +54,7 @@ export default function Footer() {
       </div>
 
       {/* bottom line and copyright */}
-      <hr className="border-t border-gray-300 mt-4" />
+      <hr className="border-t border-gray-400 mt-4 mx-8" />
       <div className="text-center text-xs text-gray-700 py-4">
         &copy; {new Date().getFullYear()} SmartParentsHC. All rights reserved.
       </div>

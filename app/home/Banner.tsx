@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link"; 
 
 export default function Banner() {
   return (
@@ -24,9 +25,13 @@ export default function Banner() {
             A path to mindful parenting starts here.
           </span>
         </p>
-        <Button className="text-base px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-md transition">
-          Enroll Now
-        </Button>
+
+        {/* wrapped button with Link */}
+        <Link href="/courses">
+          <Button className="text-base px-6 py-3 mt-3 bg-green-600 hover:bg-green-700 text-white rounded-full shadow-md transition">
+            Explore Now
+          </Button>
+        </Link>
       </div>
 
       {/* right side image */}
