@@ -1,4 +1,3 @@
-// app/dashboard/profile/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -44,7 +43,7 @@ export default function ProfilePage() {
           {purchases.map((purchase, idx) => (
             <li
               key={idx}
-              className="border border-gray-200 rounded p-4 shadow-sm flex gap-4"
+              className="border border-gray-200 rounded p-4 shadow-sm flex flex-col sm:flex-row gap-4"
             >
               {/* show course image if available, else fallback box */}
               {purchase.courseImage ? (
@@ -56,12 +55,12 @@ export default function ProfilePage() {
                   className="rounded object-cover"
                 />
               ) : (
-                <div className="w-24 h-16 bg-gray-100 rounded flex items-center justify-center text-sm text-gray-400">
+                <div className="w-24 h-16 bg-gray-100 rounded flex items-center justify-center text-sm text-gray-400 mx-auto sm:mx-0">
                   no image
                 </div>
               )}
 
-              {/* show course title, purchase date, and stripe session id */}
+              {/* show course title & date only */}
               <div>
                 <p className="font-semibold">
                   {purchase.courseTitle || `Course ID: ${purchase.courseId}`}
@@ -70,9 +69,11 @@ export default function ProfilePage() {
                   <strong>Purchased on:</strong>{" "}
                   {new Date(purchase.createdAt).toLocaleDateString()}
                 </p>
-                <p className="text-sm text-gray-600">
+
+                {/* Session ID hidden for UI cleanliness */}
+                {/* <p className="text-sm text-gray-600 break-all">
                   <strong>Session ID:</strong> {purchase.sessionId}
-                </p>
+                </p> */}
               </div>
             </li>
           ))}
