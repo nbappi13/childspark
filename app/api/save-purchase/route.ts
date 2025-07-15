@@ -23,8 +23,8 @@ export async function POST(req: Request) {
     // get checkout session from stripe
     const stripeSession = await stripe.checkout.sessions.retrieve(sessionId);
 
-    // get course id from metadata
-    const courseId = stripeSession.metadata?.courseId;
+    // get courseId from metadata
+    const courseId = stripeSession.metadata?.courseId || null;
 
     // connect to database
     const client = await clientPromise;

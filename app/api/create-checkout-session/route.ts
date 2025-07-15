@@ -39,8 +39,13 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`, // stripe replaces session id
+      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/courses`,
+
+      //  include courseId in metadata
+      metadata: {
+        courseId: course._id,
+      },
     });
 
     return NextResponse.json({ id: session.id }); // return session id
