@@ -46,6 +46,12 @@ export default async function AdminPage() {
                 👥 View All Users
               </Link>
             </li>
+            <li>
+              <Link href="/dashboard/admin/orders" className="hover:underline">
+                👥 View All Orders
+              </Link>
+            </li>
+            
             {/* have add more links here later */}
           </ul>
         </div>
