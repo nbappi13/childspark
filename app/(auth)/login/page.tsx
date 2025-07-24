@@ -15,7 +15,7 @@ export default function LoginPage() {
       {/* Content */}
       <div className="relative z-10 bg-white/90 p-8 rounded-xl shadow-lg max-w-md w-full text-center">
         <h1 className="text-3xl font-bold mb-6 text-gray-800">
-          Sign in to ChildSpark
+          Sign in to SmartParentsHC
         </h1>
 
         <Button
